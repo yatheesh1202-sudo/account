@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Authentication System</title>
+
+<style>
+body{
+    font-family:Arial, sans-serif;
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    width:350px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#007BFF;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.link{
+    text-align:center;
+    margin-top:10px;
+}
+
+.hidden{
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="registerPage">
+
+<h2>Register</h2>
+
+<input type="text" id="regName" placeholder="Full Name">
+
+<input type="email" id="regEmail" placeholder="Email">
+
+<input type="password" id="regPassword" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+<div class="link">
+Already have an account?
+<a href="#" onclick="showLogin()">Login</a>
+</div>
+
+</div>
+
+
+<div id="loginPage" class="hidden">
+
+<h2>Login</h2>
+
+<input type="email" id="loginEmail" placeholder="Email">
+
+<input type="password" id="loginPassword" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<div class="link">
+Don't have an account?
+<a href="#" onclick="showRegister()">Register</a>
+</div>
+
+</div>
+
+
+<div id="dashboard" class="hidden">
+
+<h2>Dashboard</h2>
+
+<p id="welcome"></p>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
+</div>
+
+<script>
+
+function register(){
+
+let name=document.getElementById("regName").value;
+let email=document.getElementById("regEmail").value;
+let password=document.getElementById("regPassword").value;
+
+if(name==""||email==""||password==""){
+alert("Please fill all fields");
+return;
+}
+
+localStorage.setItem("name",name);
+localStorage.setItem("email",email);
+localStorage.setItem("password",password);
+
+alert("Registration Successful!");
+
+showLogin();
+
+}
+
+function login(){
+
+let email=document.getElementById("loginEmail").value;
+let password=document.getElementById("loginPassword").value;
+
+if(email===localStorage.getItem("email") &&
+password===localStorage.getItem("password")){
+
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("dashboard").classList.remove("hidden");
+
+document.getElementById("welcome").innerHTML=
+"Welcome, <b>"+localStorage.getItem("name")+"</b>";
+
+}else{
+alert("Invalid Email or Password");
+}
+
+}
+
+function logout(){
+
+document.getElementById("dashboard").classList.add("hidden");
+document.getElementById("loginPage").classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+document.getElementById("registerPage").classList.add("hidden");
+document.getElementById("loginPage").classList.remove("hidden");
+
+}
+
+function showRegister(){
+
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("registerPage").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
